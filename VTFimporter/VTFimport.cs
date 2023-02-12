@@ -15,9 +15,10 @@ namespace VTFimporter
 {
 	public class VTFimport : NeosMod
 	{
-		public override string Name => "VTFimporter";
+		public override string Name => "VTF Importer";
 		public override string Author => "AlexW-578";
-		public override string Version => "0.0.1";
+		public override string Version => "0.1.0";
+		public override string Link => "https://github.com/AlexW-578/VTF-Importer";
 
 		public static ModConfiguration config;
 
