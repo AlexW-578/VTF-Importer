@@ -26,7 +26,8 @@ namespace VTFimporter
 		private static ModConfigurationKey<string> FILE_FORMAT = new ModConfigurationKey<string>("fileFormat", "File Format", () => "png");
 		[AutoRegisterConfigKey]
 		private static ModConfigurationKey<string> VFTCMD_PATH = new ModConfigurationKey<string>("vftCmdPath", "vftCmd Path", () => "vtfLib");
-
+		[AutoRegisterConfigKey]
+		private static ModConfigurationKey<string> OUT_DIR = new ModConfigurationKey<string>("outputDirectory", "Output Directory for converted files", () => "temp");
 		public override void OnEngineInit()
 		{
 			Harmony harmony = new Harmony("co.uk.AlexW-578.VTFimporter");
@@ -59,7 +60,11 @@ namespace VTFimporter
 					{
 						string format = config.GetValue(FILE_FORMAT);
 						string vtfcmdPath = $"{Path.GetFullPath(config.GetValue(VFTCMD_PATH))}\\VTFCmd.exe";
-						string outputPath = Path.GetTempPath() ;
+						string outputPath = Path.GetTempPath();
+						if (config.GetValue(OUT_DIR) != "temp")
+						{
+							outputPath = config.GetValue(OUT_DIR);
+						}
 						outputPath = outputPath.Remove(outputPath.Length - 1);
 						
 						// VTFcmd Args
@@ -71,6 +76,7 @@ namespace VTFimporter
 
 						string ArgsString = String.Join(" ", Args);
 						Process.Start(vtfcmdPath, ArgsString).WaitForExit();
+                        
 						string outputFile = $"{outputPath}\\{Path.GetFileNameWithoutExtension(file)}.{format}";
 						vtfFiles.Add(outputFile);
 					}
