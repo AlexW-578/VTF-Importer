@@ -61,12 +61,12 @@ namespace VTFimporter
 						string format = config.GetValue(FILE_FORMAT);
 						string vtfcmdPath = $"{Path.GetFullPath(config.GetValue(VFTCMD_PATH))}\\VTFCmd.exe";
 						string outputPath = Path.GetTempPath();
+						outputPath = outputPath.Remove(outputPath.Length - 1);
 						if (config.GetValue(OUT_DIR) != "temp")
 						{
 							outputPath = config.GetValue(OUT_DIR);
 						}
-						outputPath = outputPath.Remove(outputPath.Length - 1);
-						
+												
 						// VTFcmd Args
 						string[] Args = {
 						$"-file \"{file}\"",
